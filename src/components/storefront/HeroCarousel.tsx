@@ -15,9 +15,18 @@ function youtubeEmbedUrl(url: string) {
 
 function HeroPlaceholder() {
   return (
-    <div className="flex h-[45vh] max-h-[420px] min-h-[240px] w-full flex-col items-center justify-center gap-4 bg-gradient-to-br from-ink via-ink-light to-rust-dark text-center">
-      <img src={dirtyLogoCompleto} alt="Dirty" className="w-full max-w-md px-6 sm:max-w-xl" />
-      <p className="max-w-md px-4 text-sm text-muted">
+    <div className="relative flex h-[45vh] max-h-[420px] min-h-[240px] w-full flex-col items-center justify-center gap-4 overflow-hidden text-center">
+      <video
+        src="/hero/dirty-hero.mp4"
+        className="absolute inset-0 h-full w-full object-cover"
+        autoPlay
+        muted
+        loop
+        playsInline
+      />
+      <div className="absolute inset-0 bg-gradient-to-br from-ink/90 via-ink/60 to-rust-dark/70" />
+      <img src={dirtyLogoCompleto} alt="Dirty" className="relative w-full max-w-md px-6 sm:max-w-xl" />
+      <p className="relative max-w-md px-4 text-sm text-bone/90">
         Rashguards hechos para jiu-jitsu. Muy pronto: videos de entrenamiento y competencia.
       </p>
     </div>
