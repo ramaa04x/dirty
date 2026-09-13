@@ -357,6 +357,30 @@ export type Database = {
         }
         Relationships: []
       }
+      showcase_photos: {
+        Row: {
+          created_at: string
+          id: string
+          is_active: boolean
+          position: number
+          storage_path: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          position?: number
+          storage_path: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          position?: number
+          storage_path?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

@@ -17,6 +17,7 @@ import { ProductsList } from './pages/admin/ProductsList'
 import { ProductEdit } from './pages/admin/ProductEdit'
 import { OrdersList } from './pages/admin/OrdersList'
 import { AcademiesManager } from './pages/admin/AcademiesManager'
+import { ShowcaseManager } from './pages/admin/ShowcaseManager'
 
 function App() {
   const location = useLocation()
@@ -50,6 +51,7 @@ function App() {
             <Route path="productos/:id" element={<ProductEdit />} />
             <Route path="pedidos" element={<OrdersList />} />
             <Route path="academias" element={<AcademiesManager />} />
+            <Route path="galeria" element={<ShowcaseManager />} />
           </Route>
         </Routes>
       </main>
