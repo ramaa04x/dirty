@@ -27,7 +27,7 @@ export function Contacto() {
           className="inline-flex items-center gap-2 text-rust hover:underline"
         >
           <FiInstagram size={18} />
-          @dirty.rash
+          @dirty.rashguards
         </a>
       </div>
     </div>

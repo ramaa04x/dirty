@@ -6,11 +6,7 @@ import { useAdminProduct, slugify } from '../../hooks/useAdminProducts'
 import { ImageUploader } from '../../components/admin/ImageUploader'
 import { VariantEditor } from '../../components/admin/VariantEditor'
 import type { ProductWithRelations } from '../../types/shop'
-
-const CATEGORIES = [
-  { value: 'rashguard', label: 'Rashguard' },
-  { value: 'shorts', label: 'Shorts deportivos' },
-]
+import { CATEGORIES } from '../../lib/categories'
 
 const SLEEVE_TYPES = [
   { value: '', label: 'No aplica' },

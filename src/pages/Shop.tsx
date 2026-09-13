@@ -1,12 +1,10 @@
 import { useMemo, useState } from 'react'
+import { Link, useParams } from 'react-router-dom'
 import { ProductCard } from '../components/storefront/ProductCard'
 import { useProducts } from '../hooks/useProducts'
 import { totalStock } from '../types/shop'
-
-const CATEGORY_LABELS: Record<string, string> = {
-  rashguard: 'Rashguard',
-  shorts: 'Shorts deportivos',
-}
+import { CATEGORIES, categoryLabel } from '../lib/categories'
+import { sortSizes } from '../lib/sizes'
 
 const SLEEVE_LABELS: Record<string, string> = {
   corta: 'Manga corta',
@@ -21,35 +19,32 @@ function toggle<T>(set: Set<T>, value: T) {
 }
 
 export function Shop() {
+  const { category } = useParams<{ category?: string }>()
   const { data: products, isLoading, error } = useProducts()
   const [onlyInStock, setOnlyInStock] = useState(false)
   const [sizes, setSizes] = useState<Set<string>>(new Set())
   const [sleeves, setSleeves] = useState<Set<string>>(new Set())
-  const [categories, setCategories] = useState<Set<string>>(new Set())
   const [filtersOpen, setFiltersOpen] = useState(false)
+
+  const inCategory = useMemo(
+    () => (category ? products?.filter((p) => p.category === category) : products) ?? [],
+    [products, category]
+  )
 
   const availableSizes = useMemo(() => {
     const set = new Set<string>()
-    products?.forEach((p) => p.product_variants.forEach((v) => v.is_active && set.add(v.size)))
-    return [...set].sort()
-  }, [products])
-
-  const availableCategories = useMemo(() => {
-    const set = new Set<string>()
-    products?.forEach((p) => p.category && set.add(p.category))
-    return [...set]
-  }, [products])
+    inCategory.forEach((p) => p.product_variants.forEach((v) => v.is_active && set.add(v.size)))
+    return sortSizes([...set], (s) => s)
+  }, [inCategory])
 
   const availableSleeves = useMemo(() => {
     const set = new Set<string>()
-    products?.forEach((p) => p.sleeve_type && set.add(p.sleeve_type))
+    inCategory.forEach((p) => p.sleeve_type && set.add(p.sleeve_type))
     return [...set]
-  }, [products])
+  }, [inCategory])
 
   const filtered = useMemo(() => {
-    if (!products) return []
-    return products.filter((p) => {
-      if (categories.size > 0 && !(p.category && categories.has(p.category))) return false
+    return inCategory.filter((p) => {
       if (sleeves.size > 0 && !(p.sleeve_type && sleeves.has(p.sleeve_type))) return false
       if (onlyInStock && totalStock(p) === 0) return false
       if (sizes.size > 0) {
@@ -60,12 +55,35 @@ export function Shop() {
       }
       return true
     })
-  }, [products, categories, sleeves, sizes, onlyInStock])
+  }, [inCategory, sleeves, sizes, onlyInStock])
 
-  const activeFilterCount = categories.size + sleeves.size + sizes.size + (onlyInStock ? 1 : 0)
+  const activeFilterCount = sleeves.size + sizes.size + (onlyInStock ? 1 : 0)
 
   const filtersContent = (
     <div className="space-y-6">
+      <div>
+        <p className="mb-2 text-xs uppercase tracking-widest text-muted">Categoría</p>
+        <div className="space-y-1">
+          <Link
+            to="/tienda"
+            className={`block text-sm ${!category ? 'font-semibold text-bone' : 'text-muted hover:text-bone'}`}
+          >
+            Todos
+          </Link>
+          {CATEGORIES.map((c) => (
+            <Link
+              key={c.value}
+              to={`/tienda/${c.value}`}
+              className={`block text-sm ${
+                category === c.value ? 'font-semibold text-bone' : 'text-muted hover:text-bone'
+              }`}
+            >
+              {c.label}
+            </Link>
+          ))}
+        </div>
+      </div>
+
       <div>
         <label className="flex items-center gap-2 text-sm text-bone">
           <input
@@ -73,27 +91,9 @@ export function Shop() {
             checked={onlyInStock}
             onChange={(e) => setOnlyInStock(e.target.checked)}
           />
-          Solo con stock
+          En stock
         </label>
       </div>
-
-      {availableCategories.length > 0 && (
-        <div>
-          <p className="mb-2 text-xs uppercase tracking-widest text-muted">Categoría</p>
-          <div className="space-y-1">
-            {availableCategories.map((c) => (
-              <label key={c} className="flex items-center gap-2 text-sm text-bone">
-                <input
-                  type="checkbox"
-                  checked={categories.has(c)}
-                  onChange={() => setCategories((prev) => toggle(prev, c))}
-                />
-                {CATEGORY_LABELS[c] ?? c}
-              </label>
-            ))}
-          </div>
-        </div>
-      )}
 
       {availableSizes.length > 0 && (
         <div>
@@ -120,7 +120,7 @@ export function Shop() {
         </div>
       )}
 
-      {availableSleeves.length > 0 && (
+      {category === 'rashguards' && availableSleeves.length > 0 && (
         <div>
           <p className="mb-2 text-xs uppercase tracking-widest text-muted">Manga</p>
           <div className="space-y-1">
@@ -145,7 +145,6 @@ export function Shop() {
             setOnlyInStock(false)
             setSizes(new Set())
             setSleeves(new Set())
-            setCategories(new Set())
           }}
           className="text-sm text-rust hover:underline"
         >
@@ -157,7 +156,9 @@ export function Shop() {
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-12">
-      <h1 className="mb-8 font-display text-3xl tracking-widest text-bone">TIENDA</h1>
+      <h1 className="mb-8 font-display text-3xl tracking-widest text-bone">
+        {category ? categoryLabel(category).toUpperCase() : 'TIENDA'}
+      </h1>
 
       <button
         type="button"
@@ -179,8 +180,11 @@ export function Shop() {
           {products && products.length === 0 && (
             <p className="text-muted">Todavía no hay productos cargados.</p>
           )}
-          {products && products.length > 0 && filtered.length === 0 && (
+          {inCategory.length > 0 && filtered.length === 0 && (
             <p className="text-muted">Ningún producto coincide con esos filtros.</p>
+          )}
+          {products && products.length > 0 && inCategory.length === 0 && (
+            <p className="text-muted">Todavía no hay productos en esta categoría.</p>
           )}
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
             {filtered.map((product) => (
