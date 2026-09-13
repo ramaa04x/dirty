@@ -2,7 +2,10 @@ import { Link } from 'react-router-dom'
 import { BUCKETS, publicUrl } from '../../lib/supabase'
 import { useShowcasePhotos } from '../../hooks/useShowcasePhotos'
 
-const SECONDS_PER_IMAGE = 4
+const SECONDS_PER_IMAGE = 6
+
+const EDGE_FADE_MASK =
+  'linear-gradient(to right, transparent, black 10%, black 90%, transparent)'
 
 export function ShowcaseCarousel() {
   const { data: photos } = useShowcasePhotos()
@@ -10,13 +13,23 @@ export function ShowcaseCarousel() {
   if (!photos || photos.length === 0) return null
 
   const track = [...photos, ...photos]
-  const duration = Math.max(photos.length * SECONDS_PER_IMAGE, 12)
+  const duration = Math.max(photos.length * SECONDS_PER_IMAGE, 18)
 
   return (
     <section className="pb-20">
-      <div className="group mx-auto max-w-6xl overflow-hidden px-4">
+      <div className="mx-auto mb-6 flex max-w-6xl items-center justify-between px-4">
+        <h2 className="font-display text-2xl tracking-widest text-bone sm:text-3xl">GALERÍA</h2>
+        <Link to="/ustedes" className="text-sm text-rust hover:underline">
+          Ver más
+        </Link>
+      </div>
+
+      <div
+        className="mx-auto max-w-6xl overflow-hidden px-4"
+        style={{ WebkitMaskImage: EDGE_FADE_MASK, maskImage: EDGE_FADE_MASK }}
+      >
         <div
-          className="flex w-max animate-marquee gap-4 group-hover:[animation-play-state:paused]"
+          className="flex w-max animate-marquee gap-4"
           style={{ '--marquee-duration': `${duration}s` } as React.CSSProperties}
         >
           {track.map((photo, i) => (
@@ -32,15 +45,6 @@ export function ShowcaseCarousel() {
             </div>
           ))}
         </div>
-      </div>
-
-      <div className="mt-6 text-center">
-        <Link
-          to="/ustedes"
-          className="inline-block rounded border-2 border-rust bg-transparent px-8 py-3 font-medium uppercase tracking-widest text-rust transition-colors hover:bg-rust hover:text-bone"
-        >
-          Conocé a las academias que confían en Dirty
-        </Link>
       </div>
     </section>
   )

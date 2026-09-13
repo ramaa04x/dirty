@@ -41,7 +41,7 @@ export function Home() {
         />
         <div className="absolute inset-0 bg-ink/85" />
         <div className="relative mx-auto max-w-6xl px-4">
-          <h2 className="mb-6 text-center font-display text-2xl tracking-widest text-bone">
+          <h2 className="mb-6 text-center font-display text-2xl tracking-widest text-bone sm:text-3xl">
             PRODUCTOS DESTACADOS
           </h2>
           {isLoading && <p className="text-muted">Cargando productos...</p>}
