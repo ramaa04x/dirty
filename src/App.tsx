@@ -16,7 +16,6 @@ import { RequireAdmin } from './components/admin/RequireAdmin'
 import { ProductsList } from './pages/admin/ProductsList'
 import { ProductEdit } from './pages/admin/ProductEdit'
 import { OrdersList } from './pages/admin/OrdersList'
-import { HeroManager } from './pages/admin/HeroManager'
 import { AcademiesManager } from './pages/admin/AcademiesManager'
 
 function App() {
@@ -49,7 +48,6 @@ function App() {
             <Route path="productos" element={<ProductsList />} />
             <Route path="productos/:id" element={<ProductEdit />} />
             <Route path="pedidos" element={<OrdersList />} />
-            <Route path="hero" element={<HeroManager />} />
             <Route path="academias" element={<AcademiesManager />} />
           </Route>
         </Routes>
