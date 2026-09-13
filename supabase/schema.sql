@@ -15,6 +15,7 @@ create table products (
   price_cents integer not null check (price_cents >= 0),
   currency text not null default 'ARS',
   category text,
+  sleeve_type text check (sleeve_type is null or sleeve_type in ('corta', 'larga')),
   is_active boolean not null default true,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()

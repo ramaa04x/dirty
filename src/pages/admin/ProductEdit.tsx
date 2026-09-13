@@ -7,6 +7,17 @@ import { ImageUploader } from '../../components/admin/ImageUploader'
 import { VariantEditor } from '../../components/admin/VariantEditor'
 import type { ProductWithRelations } from '../../types/shop'
 
+const CATEGORIES = [
+  { value: 'rashguard', label: 'Rashguard' },
+  { value: 'shorts', label: 'Shorts deportivos' },
+]
+
+const SLEEVE_TYPES = [
+  { value: '', label: 'No aplica' },
+  { value: 'corta', label: 'Manga corta' },
+  { value: 'larga', label: 'Manga larga' },
+]
+
 export function ProductEdit() {
   const { id } = useParams()
   const isNew = id === 'nuevo'
@@ -35,7 +46,8 @@ function ProductForm({
   const [slug, setSlug] = useState(product?.slug ?? '')
   const [description, setDescription] = useState(product?.description ?? '')
   const [priceArs, setPriceArs] = useState(product ? String(product.price_cents / 100) : '')
-  const [category, setCategory] = useState(product?.category ?? '')
+  const [category, setCategory] = useState(product?.category ?? CATEGORIES[0].value)
+  const [sleeveType, setSleeveType] = useState(product?.sleeve_type ?? '')
   const [isActive, setIsActive] = useState(product?.is_active ?? true)
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -65,6 +77,7 @@ function ProductForm({
             description: description || null,
             price_cents: priceCents,
             category: category || null,
+            sleeve_type: sleeveType || null,
             is_active: isActive,
           })
           .select()
@@ -81,6 +94,7 @@ function ProductForm({
             description: description || null,
             price_cents: priceCents,
             category: category || null,
+            sleeve_type: sleeveType || null,
             is_active: isActive,
           })
           .eq('id', routeId!)
@@ -158,12 +172,32 @@ function ProductForm({
           </div>
           <div>
             <label className="mb-1 block text-sm text-muted">Categoría</label>
-            <input
+            <select
               value={category}
               onChange={(e) => setCategory(e.target.value)}
               className="w-full rounded border border-white/20 bg-ink-light px-3 py-2 text-bone"
-            />
+            >
+              {CATEGORIES.map((c) => (
+                <option key={c.value} value={c.value}>
+                  {c.label}
+                </option>
+              ))}
+            </select>
           </div>
+        </div>
+        <div>
+          <label className="mb-1 block text-sm text-muted">Tipo de manga</label>
+          <select
+            value={sleeveType}
+            onChange={(e) => setSleeveType(e.target.value)}
+            className="w-full rounded border border-white/20 bg-ink-light px-3 py-2 text-bone"
+          >
+            {SLEEVE_TYPES.map((s) => (
+              <option key={s.value} value={s.value}>
+                {s.label}
+              </option>
+            ))}
+          </select>
         </div>
         <label className="flex items-center gap-2 text-sm text-bone">
           <input type="checkbox" checked={isActive} onChange={(e) => setIsActive(e.target.checked)} />
