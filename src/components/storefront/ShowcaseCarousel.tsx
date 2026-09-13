@@ -1,56 +1,37 @@
-import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { BUCKETS, publicUrl } from '../../lib/supabase'
 import { useShowcasePhotos } from '../../hooks/useShowcasePhotos'
 
-const AUTOPLAY_MS = 4000
+const SECONDS_PER_IMAGE = 4
 
 export function ShowcaseCarousel() {
   const { data: photos } = useShowcasePhotos()
-  const [index, setIndex] = useState(0)
-  const [paused, setPaused] = useState(false)
-
-  useEffect(() => {
-    if (!photos || photos.length <= 1 || paused) return
-    const id = setInterval(() => {
-      setIndex((i) => (i + 1) % photos.length)
-    }, AUTOPLAY_MS)
-    return () => clearInterval(id)
-  }, [photos, paused])
 
   if (!photos || photos.length === 0) return null
 
-  return (
-    <section className="mx-auto max-w-6xl px-4 pb-20">
-      <div
-        className="relative h-[45vh] max-h-[420px] min-h-[240px] w-full overflow-hidden rounded-lg bg-black"
-        onMouseEnter={() => setPaused(true)}
-        onMouseLeave={() => setPaused(false)}
-      >
-        {photos.map((photo, i) => (
-          <img
-            key={photo.id}
-            src={publicUrl(BUCKETS.showcasePhotos, photo.storage_path)}
-            alt=""
-            className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ${
-              i === index ? 'opacity-100' : 'opacity-0'
-            }`}
-          />
-        ))}
+  const track = [...photos, ...photos]
+  const duration = Math.max(photos.length * SECONDS_PER_IMAGE, 12)
 
-        {photos.length > 1 && (
-          <div className="absolute bottom-4 left-1/2 flex -translate-x-1/2 gap-2">
-            {photos.map((photo, i) => (
-              <button
-                key={photo.id}
-                type="button"
-                onClick={() => setIndex(i)}
-                className={`h-2 w-2 rounded-full transition-colors ${i === index ? 'bg-rust' : 'bg-white/40'}`}
-                aria-label={`Ver foto ${i + 1}`}
+  return (
+    <section className="pb-20">
+      <div className="group mx-auto max-w-6xl overflow-hidden px-4">
+        <div
+          className="flex w-max animate-marquee gap-4 group-hover:[animation-play-state:paused]"
+          style={{ '--marquee-duration': `${duration}s` } as React.CSSProperties}
+        >
+          {track.map((photo, i) => (
+            <div
+              key={`${photo.id}-${i}`}
+              className="aspect-[4/3] h-56 flex-shrink-0 overflow-hidden rounded-lg sm:h-64 md:h-72"
+            >
+              <img
+                src={publicUrl(BUCKETS.showcasePhotos, photo.storage_path)}
+                alt=""
+                className="h-full w-full object-cover"
               />
-            ))}
-          </div>
-        )}
+            </div>
+          ))}
+        </div>
       </div>
 
       <div className="mt-6 text-center">
