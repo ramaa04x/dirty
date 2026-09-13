@@ -186,7 +186,7 @@ export function Shop() {
           {products && products.length > 0 && inCategory.length === 0 && (
             <p className="text-muted">Todavía no hay productos en esta categoría.</p>
           )}
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
+          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
             {filtered.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
