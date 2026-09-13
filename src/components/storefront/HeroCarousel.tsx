@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
 import { BUCKETS, publicUrl } from '../../lib/supabase'
 import { useHeroContent } from '../../hooks/useHeroContent'
 import dirtyLogoCompleto from '../../assets/brand/dirty-logo-completo.svg'
@@ -15,7 +14,7 @@ function youtubeEmbedUrl(url: string) {
 
 function HeroPlaceholder() {
   return (
-    <div className="relative flex h-[45vh] max-h-[420px] min-h-[240px] w-full flex-col items-center justify-center gap-4 overflow-hidden text-center">
+    <div className="relative flex h-[60vh] max-h-[560px] min-h-[320px] w-full flex-col items-center justify-center gap-4 overflow-hidden text-center">
       <video
         src="/hero/dirty-hero.mp4"
         className="absolute inset-0 h-full w-full object-cover"
@@ -45,7 +44,7 @@ export function HeroCarousel() {
   const src = current.external_url ?? (current.storage_path ? publicUrl(BUCKETS.heroMedia, current.storage_path) : null)
 
   return (
-    <div className="relative h-[45vh] max-h-[420px] min-h-[240px] w-full overflow-hidden bg-black">
+    <div className="relative h-[60vh] max-h-[560px] min-h-[320px] w-full overflow-hidden bg-black">
       {src && current.media_type === 'video' && isYoutubeUrl(src) && (
         <iframe
           src={youtubeEmbedUrl(src)}
@@ -74,16 +73,5 @@ export function HeroCarousel() {
         </div>
       )}
     </div>
-  )
-}
-
-export function HeroCta() {
-  return (
-    <Link
-      to="/tienda"
-      className="inline-block rounded bg-rust px-8 py-3 font-medium uppercase tracking-widest text-bone transition-colors hover:bg-rust-dark"
-    >
-      Ver tienda
-    </Link>
   )
 }
