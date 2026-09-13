@@ -1,12 +1,12 @@
 import { useQuery } from '@tanstack/react-query'
 import { supabase } from '../lib/supabase'
 
-export function useShowcasePhotos() {
+export function useInstagramPosts() {
   return useQuery({
-    queryKey: ['showcase-photos'],
+    queryKey: ['instagram-posts'],
     queryFn: async () => {
       const { data, error } = await supabase
-        .from('showcase_photos')
+        .from('instagram_posts')
         .select('*')
         .eq('is_active', true)
         .order('position', { ascending: true })

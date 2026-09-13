@@ -20,8 +20,8 @@ export function AdminLayout() {
         <NavLink to="/admin/academias" className={linkClass}>
           Academias
         </NavLink>
-        <NavLink to="/admin/galeria" className={linkClass}>
-          Galería
+        <NavLink to="/admin/instagram" className={linkClass}>
+          Instagram
         </NavLink>
         <button
           onClick={() => supabase.auth.signOut()}

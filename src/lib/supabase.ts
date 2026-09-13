@@ -10,7 +10,6 @@ export const BUCKETS = {
   productImages: 'product-images',
   heroMedia: 'hero-media',
   academyLogos: 'academy-logos',
-  showcasePhotos: 'showcase-photos',
 } as const
 
 export function publicUrl(bucket: string, path: string) {

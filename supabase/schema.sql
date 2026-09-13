@@ -236,34 +236,22 @@ create policy "admin update academy-logos" on storage.objects
 create policy "admin delete academy-logos" on storage.objects
   for delete using (bucket_id = 'academy-logos' and is_admin());
 
--- Migración: fotos de rashguards para el carrusel de la home (aplicada vía apply_migration, ver create_showcase_photos_table)
-create table showcase_photos (
+-- Migración: últimas publicaciones de Instagram embebidas en la home (aplicada vía apply_migration,
+-- ver drop_showcase_photos_table / drop_showcase_photos_storage_policies / create_instagram_posts_table).
+-- Reemplaza la galería de fotos propias de arriba: en vez de subir fotos, se pega el link del post y
+-- se embebe con el script oficial de Instagram (embed.js) — no necesita bucket de Storage.
+create table instagram_posts (
   id uuid primary key default gen_random_uuid(),
-  storage_path text not null,
+  url text not null,
   position integer not null default 0,
   is_active boolean not null default true,
   created_at timestamptz not null default now()
 );
 
-alter table showcase_photos enable row level security;
+alter table instagram_posts enable row level security;
 
-create policy "public read active showcase photos" on showcase_photos
+create policy "public read active instagram posts" on instagram_posts
   for select using (is_active or is_admin());
 
-create policy "admin write showcase photos" on showcase_photos
+create policy "admin write instagram posts" on instagram_posts
   for all using (is_admin()) with check (is_admin());
-
--- Bucket de fotos del carrusel (aplicado vía apply_migration, ver create_showcase_photos_bucket)
-insert into storage.buckets (id, name, public) values ('showcase-photos', 'showcase-photos', true);
-
-create policy "public read showcase-photos" on storage.objects
-  for select using (bucket_id = 'showcase-photos');
-
-create policy "admin write showcase-photos" on storage.objects
-  for insert with check (bucket_id = 'showcase-photos' and is_admin());
-
-create policy "admin update showcase-photos" on storage.objects
-  for update using (bucket_id = 'showcase-photos' and is_admin());
-
-create policy "admin delete showcase-photos" on storage.objects
-  for delete using (bucket_id = 'showcase-photos' and is_admin());

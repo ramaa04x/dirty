@@ -3,7 +3,7 @@ import { FiPackage, FiMapPin, FiTruck } from 'react-icons/fi'
 import { TbRuler } from 'react-icons/tb'
 import { HeroCarousel } from '../components/storefront/HeroCarousel'
 import { ProductCarousel } from '../components/storefront/ProductCarousel'
-import { ShowcaseCarousel } from '../components/storefront/ShowcaseCarousel'
+import { InstagramFeed } from '../components/storefront/InstagramFeed'
 import { useProducts } from '../hooks/useProducts'
 import { waLink } from '../lib/whatsapp'
 
@@ -52,7 +52,7 @@ export function Home() {
         </div>
       </section>
 
-      <ShowcaseCarousel />
+      <InstagramFeed />
 
       <section className="bg-ink-light py-16 text-center">
         <h2 className="font-display text-2xl tracking-widest text-bone sm:text-3xl">

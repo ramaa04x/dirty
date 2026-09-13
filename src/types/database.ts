@@ -130,6 +130,30 @@ export type Database = {
         }
         Relationships: []
       }
+      instagram_posts: {
+        Row: {
+          created_at: string
+          id: string
+          is_active: boolean
+          position: number
+          url: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          position?: number
+          url: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          position?: number
+          url?: string
+        }
+        Relationships: []
+      }
       order_items: {
         Row: {
           id: string
@@ -354,30 +378,6 @@ export type Database = {
           sleeve_type?: string | null
           slug?: string
           updated_at?: string
-        }
-        Relationships: []
-      }
-      showcase_photos: {
-        Row: {
-          created_at: string
-          id: string
-          is_active: boolean
-          position: number
-          storage_path: string
-        }
-        Insert: {
-          created_at?: string
-          id?: string
-          is_active?: boolean
-          position?: number
-          storage_path: string
-        }
-        Update: {
-          created_at?: string
-          id?: string
-          is_active?: boolean
-          position?: number
-          storage_path?: string
         }
         Relationships: []
       }
