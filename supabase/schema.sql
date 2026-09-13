@@ -190,7 +190,6 @@ create policy "admins manage own admin row" on admins
 create table academies (
   id uuid primary key default gen_random_uuid(),
   name text not null,
-  logo_storage_path text,
   position integer not null default 0,
   is_active boolean not null default true,
   created_at timestamptz not null default now()
@@ -202,6 +201,24 @@ create policy "public read active academies" on academies
   for select using (is_active = true or is_admin());
 
 create policy "admin write academies" on academies
+  for all using (is_admin()) with check (is_admin());
+
+-- Migración: galería de fotos por academia (aplicada vía apply_migration, ver academy_photos_gallery)
+create table academy_photos (
+  id uuid primary key default gen_random_uuid(),
+  academy_id uuid not null references academies (id) on delete cascade,
+  storage_path text not null,
+  position integer not null default 0
+);
+
+alter table academy_photos enable row level security;
+
+create policy "public read academy photos" on academy_photos
+  for select using (
+    exists (select 1 from academies a where a.id = academy_photos.academy_id and (a.is_active or is_admin()))
+  );
+
+create policy "admin write academy photos" on academy_photos
   for all using (is_admin()) with check (is_admin());
 
 -- Bucket de logos de academias (aplicado vía apply_migration, ver create_academy_logos_bucket)

@@ -19,7 +19,6 @@ export type Database = {
           created_at: string
           id: string
           is_active: boolean
-          logo_storage_path: string | null
           name: string
           position: number
         }
@@ -27,7 +26,6 @@ export type Database = {
           created_at?: string
           id?: string
           is_active?: boolean
-          logo_storage_path?: string | null
           name: string
           position?: number
         }
@@ -35,11 +33,39 @@ export type Database = {
           created_at?: string
           id?: string
           is_active?: boolean
-          logo_storage_path?: string | null
           name?: string
           position?: number
         }
         Relationships: []
+      }
+      academy_photos: {
+        Row: {
+          academy_id: string
+          id: string
+          position: number
+          storage_path: string
+        }
+        Insert: {
+          academy_id: string
+          id?: string
+          position?: number
+          storage_path: string
+        }
+        Update: {
+          academy_id?: string
+          id?: string
+          position?: number
+          storage_path?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "academy_photos_academy_id_fkey"
+            columns: ["academy_id"]
+            isOneToOne: false
+            referencedRelation: "academies"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       admins: {
         Row: {

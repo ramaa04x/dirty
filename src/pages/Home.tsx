@@ -1,13 +1,16 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { FaWhatsapp } from 'react-icons/fa'
 import { FiPackage, FiMapPin, FiTruck } from 'react-icons/fi'
 import { TbRuler } from 'react-icons/tb'
 import { HeroCarousel } from '../components/storefront/HeroCarousel'
 import { ProductCarousel } from '../components/storefront/ProductCarousel'
+import { AcademyModal } from '../components/storefront/AcademyModal'
 import { useProducts } from '../hooks/useProducts'
 import { useAcademies } from '../hooks/useAcademies'
 import { BUCKETS, publicUrl } from '../lib/supabase'
 import { waLink } from '../lib/whatsapp'
+import { coverPhotoPath, type AcademyWithPhotos } from '../types/academy'
 
 const valueProps = [
   { icon: TbRuler, label: 'Hechas a medida' },
@@ -21,6 +24,7 @@ export function Home() {
   const featured = products?.slice(0, 10)
   const { data: academies } = useAcademies()
   const academyPreview = academies?.slice(0, 4)
+  const [selectedAcademy, setSelectedAcademy] = useState<AcademyWithPhotos | null>(null)
 
   return (
     <div>
@@ -62,23 +66,35 @@ export function Home() {
             ACADEMIAS QUE CONFÍAN EN DIRTY
           </h2>
           <div className="flex flex-wrap items-center justify-center gap-6">
-            {academyPreview.map((academy) => (
-              <div key={academy.id} className="flex flex-col items-center gap-2">
-                {academy.logo_storage_path && (
-                  <img
-                    src={publicUrl(BUCKETS.academyLogos, academy.logo_storage_path)}
-                    alt={academy.name}
-                    className="h-14 w-14 rounded object-cover"
-                  />
-                )}
-                <p className="text-xs text-muted">{academy.name}</p>
-              </div>
-            ))}
+            {academyPreview.map((academy) => {
+              const coverPath = coverPhotoPath(academy)
+              return (
+                <button
+                  key={academy.id}
+                  type="button"
+                  onClick={() => setSelectedAcademy(academy)}
+                  className="flex flex-col items-center gap-2"
+                >
+                  {coverPath && (
+                    <img
+                      src={publicUrl(BUCKETS.academyLogos, coverPath)}
+                      alt={academy.name}
+                      className="h-14 w-14 rounded object-cover"
+                    />
+                  )}
+                  <p className="text-xs text-muted">{academy.name}</p>
+                </button>
+              )
+            })}
           </div>
           <Link to="/ustedes" className="mt-6 inline-block text-sm text-rust hover:underline">
             Ver todas
           </Link>
         </section>
+      )}
+
+      {selectedAcademy && (
+        <AcademyModal academy={selectedAcademy} onClose={() => setSelectedAcademy(null)} />
       )}
 
       <section className="bg-ink-light py-16 text-center">

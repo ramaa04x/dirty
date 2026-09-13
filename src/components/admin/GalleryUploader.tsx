@@ -1,14 +1,21 @@
 import { useRef, useState } from 'react'
-import { BUCKETS, publicUrl, supabase, uploadFile } from '../../lib/supabase'
-import type { Tables } from '../../types/database'
+import { publicUrl, supabase, uploadFile } from '../../lib/supabase'
 
-export function ImageUploader({
-  productId,
+type GalleryImage = { id: string; storage_path: string; position: number }
+
+export function GalleryUploader({
+  bucket,
+  table,
+  ownerField,
+  ownerId,
   images,
   onChange,
 }: {
-  productId: string
-  images: Tables<'product_images'>[]
+  bucket: string
+  table: 'product_images' | 'academy_photos'
+  ownerField: 'product_id' | 'academy_id'
+  ownerId: string
+  images: GalleryImage[]
   onChange: () => void
 }) {
   const [uploading, setUploading] = useState(false)
@@ -20,13 +27,11 @@ export function ImageUploader({
     try {
       for (let i = 0; i < files.length; i++) {
         const file = files[i]
-        const path = `${productId}/${crypto.randomUUID()}-${file.name}`
-        await uploadFile(BUCKETS.productImages, path, file)
-        await supabase.from('product_images').insert({
-          product_id: productId,
-          storage_path: path,
-          position: images.length + i,
-        })
+        const path = `${ownerId}/${crypto.randomUUID()}-${file.name}`
+        await uploadFile(bucket, path, file)
+        await supabase
+          .from(table)
+          .insert({ [ownerField]: ownerId, storage_path: path, position: images.length + i } as never)
       }
       onChange()
     } finally {
@@ -36,22 +41,18 @@ export function ImageUploader({
   }
 
   async function removeImage(imageId: string) {
-    await supabase.from('product_images').delete().eq('id', imageId)
+    await supabase.from(table).delete().eq('id', imageId)
     onChange()
   }
 
   return (
     <div>
       <div className="flex flex-wrap gap-3">
-        {images
+        {[...images]
           .sort((a, b) => a.position - b.position)
           .map((img) => (
             <div key={img.id} className="group relative h-24 w-24 overflow-hidden rounded border border-white/10">
-              <img
-                src={publicUrl(BUCKETS.productImages, img.storage_path)}
-                alt=""
-                className="h-full w-full object-cover"
-              />
+              <img src={publicUrl(bucket, img.storage_path)} alt="" className="h-full w-full object-cover" />
               <button
                 type="button"
                 onClick={() => removeImage(img.id)}

@@ -7,7 +7,7 @@ export function useAcademies() {
     queryFn: async () => {
       const { data, error } = await supabase
         .from('academies')
-        .select('*')
+        .select('*, academy_photos(*)')
         .eq('is_active', true)
         .order('position', { ascending: true })
       if (error) throw error

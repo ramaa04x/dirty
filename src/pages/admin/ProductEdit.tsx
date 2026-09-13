@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useQueryClient } from '@tanstack/react-query'
-import { supabase } from '../../lib/supabase'
+import { BUCKETS, supabase } from '../../lib/supabase'
 import { useAdminProduct, slugify } from '../../hooks/useAdminProducts'
-import { ImageUploader } from '../../components/admin/ImageUploader'
+import { GalleryUploader } from '../../components/admin/GalleryUploader'
 import { VariantEditor } from '../../components/admin/VariantEditor'
 import type { ProductWithRelations } from '../../types/shop'
 import { CATEGORIES } from '../../lib/categories'
@@ -226,7 +226,14 @@ function ProductForm({
         <>
           <div className="mt-10">
             <h2 className="mb-3 text-sm uppercase tracking-widest text-muted">Imágenes</h2>
-            <ImageUploader productId={product.id} images={product.product_images} onChange={refetch} />
+            <GalleryUploader
+              bucket={BUCKETS.productImages}
+              table="product_images"
+              ownerField="product_id"
+              ownerId={product.id}
+              images={product.product_images}
+              onChange={refetch}
+            />
           </div>
           <div className="mt-10">
             <h2 className="mb-3 text-sm uppercase tracking-widest text-muted">Talles y stock</h2>
