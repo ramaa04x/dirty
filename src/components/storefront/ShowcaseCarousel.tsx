@@ -16,10 +16,15 @@ export function ShowcaseCarousel() {
   const duration = Math.max(photos.length * SECONDS_PER_IMAGE, 18)
 
   return (
-    <section className="pb-20">
-      <div className="mx-auto mb-6 flex max-w-6xl items-center justify-between px-4">
-        <h2 className="font-display text-2xl tracking-widest text-bone sm:text-3xl">GALERÍA</h2>
-        <Link to="/ustedes" className="text-sm text-rust hover:underline">
+    <section className="py-16">
+      <div className="relative mx-auto mb-6 max-w-6xl px-4">
+        <h2 className="text-center font-display text-2xl tracking-widest text-bone sm:text-3xl">
+          GALERÍA
+        </h2>
+        <Link
+          to="/ustedes"
+          className="absolute right-4 top-1/2 -translate-y-1/2 rounded border border-rust px-3 py-1 text-base text-rust transition-colors hover:bg-rust hover:text-bone"
+        >
           Ver más
         </Link>
       </div>

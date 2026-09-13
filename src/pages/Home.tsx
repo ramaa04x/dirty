@@ -33,7 +33,7 @@ export function Home() {
         </div>
       </section>
 
-      <section className="relative overflow-hidden py-20">
+      <section className="relative overflow-hidden py-16">
         <img
           src="/images/productos-bg.jpg"
           alt=""
