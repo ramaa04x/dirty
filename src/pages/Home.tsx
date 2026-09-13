@@ -37,15 +37,23 @@ export function Home() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-4 py-20">
-        <h2 className="mb-6 text-center font-display text-2xl tracking-widest text-bone">
-          PRODUCTOS DESTACADOS
-        </h2>
-        {isLoading && <p className="text-muted">Cargando productos...</p>}
-        {featured && featured.length === 0 && (
-          <p className="text-muted">Todavía no hay productos cargados.</p>
-        )}
-        {featured && featured.length > 0 && <ProductCarousel products={featured} />}
+      <section className="relative overflow-hidden py-20">
+        <img
+          src="/images/productos-bg.jpg"
+          alt=""
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+        <div className="absolute inset-0 bg-ink/85" />
+        <div className="relative mx-auto max-w-6xl px-4">
+          <h2 className="mb-6 text-center font-display text-2xl tracking-widest text-bone">
+            PRODUCTOS DESTACADOS
+          </h2>
+          {isLoading && <p className="text-muted">Cargando productos...</p>}
+          {featured && featured.length === 0 && (
+            <p className="text-muted">Todavía no hay productos cargados.</p>
+          )}
+          {featured && featured.length > 0 && <ProductCarousel products={featured} />}
+        </div>
       </section>
 
       {academyPreview && academyPreview.length > 0 && (
