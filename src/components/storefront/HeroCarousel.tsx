@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { BUCKETS, publicUrl } from '../../lib/supabase'
 import { useHeroContent } from '../../hooks/useHeroContent'
+import dirtyLogoCompleto from '../../assets/brand/dirty-logo-completo.svg'
 
 function isYoutubeUrl(url: string) {
   return /youtube\.com|youtu\.be/.test(url)
@@ -15,7 +16,7 @@ function youtubeEmbedUrl(url: string) {
 function HeroPlaceholder() {
   return (
     <div className="flex h-[45vh] max-h-[420px] min-h-[240px] w-full flex-col items-center justify-center gap-4 bg-gradient-to-br from-ink via-ink-light to-rust-dark text-center">
-      <span className="font-display text-5xl tracking-[0.2em] text-bone sm:text-7xl">DIRTY</span>
+      <img src={dirtyLogoCompleto} alt="Dirty" className="w-full max-w-md px-6 sm:max-w-xl" />
       <p className="max-w-md px-4 text-sm text-muted">
         Rashguards hechos para jiu-jitsu. Muy pronto: videos de entrenamiento y competencia.
       </p>

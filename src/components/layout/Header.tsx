@@ -4,6 +4,7 @@ import { FiInstagram, FiMenu, FiShoppingBag, FiX } from 'react-icons/fi'
 import { FaWhatsapp } from 'react-icons/fa'
 import { useCartStore } from '../../store/cartStore'
 import { INSTAGRAM_URL, waLink } from '../../lib/whatsapp'
+import dirtyWordmark from '../../assets/brand/dirty-wordmark.svg'
 
 const navLinkClass = ({ isActive }: { isActive: boolean }) =>
   `text-sm uppercase tracking-widest transition-colors hover:text-bone ${
@@ -29,8 +30,8 @@ export function Header() {
   return (
     <header className="sticky top-0 z-40 border-b border-white/10 bg-ink/95 backdrop-blur">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4">
-        <Link to="/" className="font-display text-2xl tracking-widest text-bone">
-          DIRTY
+        <Link to="/" aria-label="Dirty">
+          <img src={dirtyWordmark} alt="Dirty" className="h-8 w-auto sm:h-9" />
         </Link>
 
         <nav className="hidden items-center gap-8 sm:flex">
