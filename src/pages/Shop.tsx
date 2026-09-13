@@ -155,7 +155,7 @@ export function Shop() {
   )
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-12">
+    <div className="mx-auto max-w-[1600px] px-4 py-12">
       <h1 className="mb-8 font-display text-3xl tracking-widest text-bone">
         {category ? categoryLabel(category).toUpperCase() : 'TIENDA'}
       </h1>

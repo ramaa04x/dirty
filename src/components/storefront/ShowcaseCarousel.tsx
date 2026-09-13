@@ -17,7 +17,7 @@ export function ShowcaseCarousel() {
 
   return (
     <section className="py-16">
-      <div className="relative mx-auto mb-6 max-w-6xl px-4">
+      <div className="relative mx-auto mb-6 max-w-[1600px] px-4">
         <h2 className="text-center font-display text-2xl tracking-widest text-bone sm:text-3xl">
           GALERÍA
         </h2>
@@ -30,7 +30,7 @@ export function ShowcaseCarousel() {
       </div>
 
       <div
-        className="mx-auto max-w-6xl overflow-hidden px-4"
+        className="mx-auto max-w-[1600px] overflow-hidden px-4"
         style={{ WebkitMaskImage: EDGE_FADE_MASK, maskImage: EDGE_FADE_MASK }}
       >
         <div

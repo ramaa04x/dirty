@@ -9,7 +9,7 @@ export function Ustedes() {
   const [selected, setSelected] = useState<AcademyWithPhotos | null>(null)
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-16">
+    <div className="mx-auto max-w-[1600px] px-4 py-16">
       <h1 className="mb-2 font-display text-3xl tracking-widest text-bone sm:text-4xl">USTEDES</h1>
       <p className="mb-10 text-muted">Las academias que ya confiaron en nosotros</p>
 

@@ -23,7 +23,7 @@ export function Home() {
       <HeroCarousel />
 
       <section className="border-y border-white/10 bg-ink-light">
-        <div className="mx-auto grid max-w-6xl grid-cols-2 gap-6 px-4 py-10 sm:grid-cols-4">
+        <div className="mx-auto grid max-w-[1600px] grid-cols-2 gap-6 px-4 py-10 sm:grid-cols-4">
           {valueProps.map(({ icon: Icon, label }) => (
             <div key={label} className="flex flex-col items-center gap-2 text-center">
               <Icon size={24} className="text-rust" />
@@ -40,7 +40,7 @@ export function Home() {
           className="absolute inset-0 h-full w-full object-cover"
         />
         <div className="absolute inset-0 bg-ink/85" />
-        <div className="relative mx-auto max-w-6xl px-4">
+        <div className="relative mx-auto max-w-[1600px] px-4">
           <h2 className="mb-6 text-center font-display text-2xl tracking-widest text-bone sm:text-3xl">
             PRODUCTOS DESTACADOS
           </h2>

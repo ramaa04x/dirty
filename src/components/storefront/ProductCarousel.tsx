@@ -21,13 +21,13 @@ export function ProductCarousel({ products }: { products: ProductWithRelations[]
         {products.map((product) => (
           <div
             key={product.id}
-            className="w-[calc(50%-8px)] flex-none snap-start sm:w-[calc(33.333%-11px)] lg:w-[calc(25%-12px)]"
+            className="w-[calc(50%-8px)] flex-none snap-start sm:w-[calc(33.333%-11px)] lg:w-[calc(16.6667%-13.33px)]"
           >
             <ProductCard product={product} />
           </div>
         ))}
       </div>
-      {products.length > 4 && (
+      {products.length > 6 && (
         <>
           <button
             type="button"
