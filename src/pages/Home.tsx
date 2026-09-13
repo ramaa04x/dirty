@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { FaWhatsapp } from 'react-icons/fa'
-import { FiPackage, FiMapPin, FiTruck, FiFeather } from 'react-icons/fi'
+import { FiPackage, FiMapPin, FiTruck } from 'react-icons/fi'
+import { TbRuler } from 'react-icons/tb'
 import { HeroCarousel } from '../components/storefront/HeroCarousel'
 import { ProductCarousel } from '../components/storefront/ProductCarousel'
 import { useProducts } from '../hooks/useProducts'
@@ -9,7 +10,7 @@ import { BUCKETS, publicUrl } from '../lib/supabase'
 import { waLink } from '../lib/whatsapp'
 
 const valueProps = [
-  { icon: FiFeather, label: 'Diseño propio' },
+  { icon: TbRuler, label: 'Hechas a medida' },
   { icon: FiPackage, label: 'Materiales resistentes' },
   { icon: FiMapPin, label: 'Hecho en Argentina' },
   { icon: FiTruck, label: 'Envíos a todo el país' },
@@ -37,7 +38,9 @@ export function Home() {
       </section>
 
       <section className="mx-auto max-w-6xl px-4 py-20">
-        <h2 className="mb-6 font-display text-xl tracking-widest text-bone">PRODUCTOS</h2>
+        <h2 className="mb-6 text-center font-display text-2xl tracking-widest text-bone">
+          PRODUCTOS DESTACADOS
+        </h2>
         {isLoading && <p className="text-muted">Cargando productos...</p>}
         {featured && featured.length === 0 && (
           <p className="text-muted">Todavía no hay productos cargados.</p>
@@ -70,7 +73,7 @@ export function Home() {
         </section>
       )}
 
-      <section className="bg-rust/10 py-16 text-center">
+      <section className="bg-ink-light py-16 text-center">
         <h2 className="font-display text-2xl tracking-widest text-bone sm:text-3xl">
           ¿TENÉS UNA IDEA?
         </h2>

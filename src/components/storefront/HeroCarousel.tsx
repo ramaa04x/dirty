@@ -20,7 +20,7 @@ function HeroCtas() {
     <div className="relative flex flex-wrap items-center justify-center gap-3">
       <Link
         to="/tienda"
-        className="rounded bg-rust px-8 py-3 font-medium uppercase tracking-widest text-bone transition-colors hover:bg-rust-dark"
+        className="rounded border-2 border-rust bg-transparent px-8 py-3 font-medium uppercase tracking-widest text-rust transition-colors hover:bg-rust hover:text-bone"
       >
         Ver tienda
       </Link>
@@ -28,7 +28,7 @@ function HeroCtas() {
         href={waLink('Hola! Quiero hacer una consulta sobre un rashguard personalizado.')}
         target="_blank"
         rel="noreferrer"
-        className="inline-flex items-center gap-2 rounded bg-whatsapp px-8 py-3 font-medium uppercase tracking-widest text-bone transition-colors hover:bg-whatsapp-dark"
+        className="inline-flex items-center gap-2 rounded border-2 border-whatsapp bg-transparent px-8 py-3 font-medium uppercase tracking-widest text-whatsapp transition-colors hover:bg-whatsapp hover:text-bone"
       >
         <FaWhatsapp size={20} />
         Escribinos
@@ -51,7 +51,7 @@ function HeroPlaceholder() {
       <div className="absolute inset-0 bg-gradient-to-br from-ink/90 via-ink/60 to-rust-dark/70" />
       <img src={dirtyLogoCompleto} alt="Dirty" className="relative w-full max-w-md px-6 sm:max-w-xl" />
       <p className="relative max-w-md px-4 text-sm text-bone/90">
-        Rashguards hechos para jiu-jitsu. Muy pronto: videos de entrenamiento y competencia.
+        La mejor rashguard del país. Hecha por y para guerreros.
       </p>
       <HeroCtas />
     </div>
