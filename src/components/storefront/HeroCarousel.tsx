@@ -1,6 +1,9 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
+import { FaWhatsapp } from 'react-icons/fa'
 import { BUCKETS, publicUrl } from '../../lib/supabase'
 import { useHeroContent } from '../../hooks/useHeroContent'
+import { waLink } from '../../lib/whatsapp'
 import dirtyLogoCompleto from '../../assets/brand/dirty-logo-completo.svg'
 
 function isYoutubeUrl(url: string) {
@@ -10,6 +13,28 @@ function isYoutubeUrl(url: string) {
 function youtubeEmbedUrl(url: string) {
   const idMatch = url.match(/(?:v=|youtu\.be\/)([\w-]+)/)
   return idMatch ? `https://www.youtube.com/embed/${idMatch[1]}` : url
+}
+
+function HeroCtas() {
+  return (
+    <div className="relative flex flex-wrap items-center justify-center gap-3">
+      <Link
+        to="/tienda"
+        className="rounded bg-rust px-8 py-3 font-medium uppercase tracking-widest text-bone transition-colors hover:bg-rust-dark"
+      >
+        Ver tienda
+      </Link>
+      <a
+        href={waLink('Hola! Quiero hacer una consulta sobre un rashguard personalizado.')}
+        target="_blank"
+        rel="noreferrer"
+        className="inline-flex items-center gap-2 rounded bg-whatsapp px-8 py-3 font-medium uppercase tracking-widest text-bone transition-colors hover:bg-whatsapp-dark"
+      >
+        <FaWhatsapp size={20} />
+        Escribinos
+      </a>
+    </div>
+  )
 }
 
 function HeroPlaceholder() {
@@ -28,6 +53,7 @@ function HeroPlaceholder() {
       <p className="relative max-w-md px-4 text-sm text-bone/90">
         Rashguards hechos para jiu-jitsu. Muy pronto: videos de entrenamiento y competencia.
       </p>
+      <HeroCtas />
     </div>
   )
 }
@@ -60,8 +86,11 @@ export function HeroCarousel() {
       {src && current.media_type === 'image' && (
         <img src={src} alt={current.title ?? 'Dirty'} className="h-full w-full object-cover" />
       )}
+      <div className="absolute inset-x-0 bottom-6 flex flex-col items-center gap-4 px-4">
+        <HeroCtas />
+      </div>
       {items.length > 1 && (
-        <div className="absolute bottom-4 left-1/2 flex -translate-x-1/2 gap-2">
+        <div className="absolute top-4 left-1/2 flex -translate-x-1/2 gap-2">
           {items.map((item, i) => (
             <button
               key={item.id}

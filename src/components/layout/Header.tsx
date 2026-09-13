@@ -1,19 +1,19 @@
 import { useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
-import { FiInstagram, FiMenu, FiShoppingBag, FiX } from 'react-icons/fi'
+import { FiInstagram, FiMenu, FiShoppingCart, FiX } from 'react-icons/fi'
 import { FaWhatsapp } from 'react-icons/fa'
 import { useCartStore } from '../../store/cartStore'
 import { INSTAGRAM_URL, waLink } from '../../lib/whatsapp'
 import dirtyWordmark from '../../assets/brand/dirty-wordmark.svg'
 
 const navLinkClass = ({ isActive }: { isActive: boolean }) =>
-  `text-sm uppercase tracking-widest transition-colors hover:text-bone ${
-    isActive ? 'text-bone' : 'text-muted'
+  `border-b-2 pb-1 text-sm uppercase tracking-widest transition-colors hover:text-bone ${
+    isActive ? 'border-rust font-semibold text-bone' : 'border-transparent text-muted'
   }`
 
 const mobileNavLinkClass = ({ isActive }: { isActive: boolean }) =>
-  `block py-3 text-sm uppercase tracking-widest transition-colors hover:text-bone ${
-    isActive ? 'text-bone' : 'text-muted'
+  `block border-l-2 py-3 pl-3 text-sm uppercase tracking-widest transition-colors hover:text-bone ${
+    isActive ? 'border-rust font-semibold text-bone' : 'border-transparent text-muted'
   }`
 
 const navLinks = [
@@ -45,10 +45,10 @@ export function Header() {
         <div className="flex items-center gap-4">
           <Link
             to="/carrito"
-            className="relative text-bone transition-opacity hover:opacity-80"
+            className="relative text-bone transition-colors hover:text-rust"
             aria-label="Carrito"
           >
-            <FiShoppingBag size={22} />
+            <FiShoppingCart size={22} />
             {itemCount > 0 && (
               <span className="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-rust text-xs font-semibold text-bone">
                 {itemCount}
@@ -59,19 +59,19 @@ export function Header() {
             href={INSTAGRAM_URL}
             target="_blank"
             rel="noreferrer"
-            className="text-muted transition-colors hover:text-bone"
+            className="text-bone transition-colors hover:text-rust"
             aria-label="Instagram de Dirty"
           >
-            <FiInstagram size={20} />
+            <FiInstagram size={22} />
           </a>
           <a
             href={waLink()}
             target="_blank"
             rel="noreferrer"
-            className="text-muted transition-colors hover:text-whatsapp"
+            className="text-bone transition-colors hover:text-whatsapp"
             aria-label="WhatsApp de Dirty"
           >
-            <FaWhatsapp size={20} />
+            <FaWhatsapp size={22} />
           </a>
           <button
             type="button"
